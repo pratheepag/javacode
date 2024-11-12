@@ -1,27 +1,33 @@
 package code;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Sample {
-	public static void main(String args[]) {
-		List<Employee> employees = new ArrayList<>();
-		employees.add(new Employee("John", 1000, "IT"));
-		employees.add(new Employee("Jane", 2000, "HR"));
-		employees.add(new Employee("Jack", 3000, "ADMIN"));
-		employees.add(new Employee("Jill", 4000, "IT"));
-		employees.add(new Employee("Joe", 5000, "IT"));
-
-		Map<String, Optional<Employee>> employeesMap = employees.stream().collect(Collectors
-				.groupingBy(Employee::getDepartment, Collectors.maxBy(Comparator.comparingInt(Employee::getSalary))));
-		System.out.println("Highest salary dept wise:: \n" + employees.stream()
-				.collect(Collectors.groupingBy(Employee::getDepartment,
-						Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingInt(Employee::getSalary)),
-								(Optional<Employee> emp) -> emp.get().getSalary()))));
-		//employeesMap.forEach((key, value) -> System.out.println(key + " " + value.get().getSalary()));
+	public static void main(String args[]) throws URISyntaxException, IOException {
+		String str = "Hello";
+		List<String> stringElement = Arrays.asList("a", "e", "i", "o", "u");
+		List<String> vowels = new ArrayList<>(stringElement);
+		Map<String, Long> map2 =str.chars().mapToObj(c -> String.valueOf((char)c)).filter(word -> vowels.contains(word)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		//Map<String, Long> map = Arrays.asList(words).stream().filter(word -> vowels.contains(word)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		map2.entrySet().forEach(System.out::println);
+		//Arrays.stream().filter(vowels::contains).forEach(System.out::println);)
+		
+		Path path1 = Paths.get(Sample.class.getResource("sample.txt").toURI());
+		Files.lines(path1).forEach(System.out::println);
+		
+		URL url = Sample.class.getResource("sample.txt");
+		Path path = Paths.get(url.toURI());
+		Files.lines(path).forEach(System.out::println);
 	}
 }

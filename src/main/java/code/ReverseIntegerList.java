@@ -9,5 +9,6 @@ public class ReverseIntegerList {
 		
 		Collections.reverse(Arrays.asList(numbers));
 		System.out.println(Arrays.toString(numbers));
+		Arrays.parallelSort(numbers);
 	}
 }

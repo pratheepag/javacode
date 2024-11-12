@@ -2,7 +2,7 @@ package code;
 
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
 	public String name;
 	public int salary;
 	public String department;
@@ -58,6 +58,11 @@ public class Employee {
 		Employee other = (Employee) obj;
 		return Objects.equals(department, other.department) && Objects.equals(name, other.name)
 				&& salary == other.salary;
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		return this.name.compareTo(o.name);
 	}
 	
 }
